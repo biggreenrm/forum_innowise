@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'topic.apps.TopicConfig',
     'comment.apps.CommentConfig',
     'likedislike.apps.LikedislikeConfig',
+    'api.apps.ApiConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
