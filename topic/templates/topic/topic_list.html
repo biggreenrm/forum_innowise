@@ -1,0 +1,11 @@
+{% extends 'topic/base.html' %}
+
+{% block content %}
+    <div class="topic-list">
+        <h1>List of all topics</h1>
+        {% for topic in topics %}
+            <h2>{{ topic.title }}</h2>
+            <p> open to read </p>
+        {% endfor %}
+    </div>
+{% endblock %}
