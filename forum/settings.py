@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'topic.apps.TopicConfig',
     'comment.apps.CommentConfig',
+    'likedislike.apps.LikedislikeConfig',
 ]
 
 MIDDLEWARE = [
