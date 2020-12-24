@@ -4,8 +4,8 @@
     <div class="topic-list">
         <h1>List of all topics</h1>
         {% for topic in topics %}
-            <h2>{{ topic.title }}</h2>
-            <p> open to read </p>
+            <h2><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></h2>
+            <p>open to read</p>
         {% endfor %}
     </div>
 {% endblock %}
