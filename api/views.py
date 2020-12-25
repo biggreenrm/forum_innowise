@@ -34,5 +34,3 @@ class CommentViewSet(viewsets.ModelViewSet):
 class LikeDislikeViewSet(viewsets.ModelViewSet):
     serializer_class = LikeDislikeSerializer
     queryset = LikeDislike.objects.all()
-    filter_backends = [filters.DjangoFilterBackend]
-    filterset_fields = ('user', 'vote', 'content_object')
