@@ -52,4 +52,4 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 class LikeDislikeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LikeDislike
-        fields = "__all__"
+        fields = ('vote', 'user', 'content_type', 'object_id')
