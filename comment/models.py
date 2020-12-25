@@ -15,4 +15,11 @@ class Comment(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id')
     text = models.CharField(max_length=1000, default="")
     created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
+    published_status = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ("created_date",)
+
+    def publish(self):
+        if not self.published_status:
+            self.published_status = True

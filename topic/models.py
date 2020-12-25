@@ -13,13 +13,14 @@ class Topic(models.Model):
     theme = models.CharField(max_length=200)
     text = models.TextField() # нужна ли максимальная длина? какие-нибудь другие параметры?
     created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
+    published_status = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ("published_date",)
+        ordering = ("created_date",)
 
     def publish(self):
-        self.published_date = timezone.now()
+        if not self.published_status:
+            self.published_status = True
 
     def __str__(self):
         return self.title
