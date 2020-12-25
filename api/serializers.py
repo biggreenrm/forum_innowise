@@ -33,7 +33,7 @@ class CommentedObjectRelatedField(serializers.RelatedField):
         """
         Serialize commented objects to simple textual representation.
         """
-        import pdb; pdb.set_trace()
+
         if isinstance(value, Comment):
             return 'Comment: ' + value.id
         elif isinstance(value, Topic):
@@ -52,4 +52,4 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 class LikeDislikeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LikeDislike
-        fields = ('vote', 'user', 'content_type', 'object_id')
+        fields = ('vote', 'user', 'object_id')
