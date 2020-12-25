@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'likedislike.apps.LikedislikeConfig',
     'api.apps.ApiConfig',
     'rest_framework',
+    'generic_relations',
     'django_filters',
 ]
 
