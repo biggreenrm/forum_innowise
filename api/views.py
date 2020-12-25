@@ -2,12 +2,21 @@
 from topic.models import Topic
 from comment.models import Comment
 from likedislike.models import LikeDislike
-from .serializers import TopicSerializer, CommentSerializer, LikeDislikeSerializer
+from .serializers import TopicSerializer, CommentSerializer, LikeDislikeSerializer, UserSerializer
 # Django
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
 # Third-party
-from rest_frameworl import viewsets
+from rest_framework import viewsets
 from django_filters import rest_framework as filters
+
+
+User = get_user_model()
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class TopicViewSet(viewsets.ModelViewSet):

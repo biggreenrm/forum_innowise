@@ -1,5 +1,5 @@
 # First-party
-from .views import TopicViewSet, CommentViewSet, LikeDislikeViewSet
+from .views import TopicViewSet, CommentViewSet, LikeDislikeViewSet, UserViewSet
 # Django
 from django.urls import include, path
 # Third-party
@@ -10,6 +10,7 @@ router = routers.DefaultRouter()
 router.register(r'topics', TopicViewSet)
 router.register(r'comments', CommentViewSet)
 router.register(r'likesdislikes', LikeDislikeViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
