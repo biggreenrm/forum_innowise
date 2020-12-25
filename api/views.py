@@ -14,6 +14,10 @@ from django_filters import rest_framework as filters
 User = get_user_model()
 
 
+"""
+Работа с моделями по лайтовому пути - много магии, мало гибкости (она и не нужна).
+"""
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -34,3 +38,9 @@ class CommentViewSet(viewsets.ModelViewSet):
 class LikeDislikeViewSet(viewsets.ModelViewSet):
     serializer_class = LikeDislikeSerializer
     queryset = LikeDislike.objects.all()
+
+
+"""
+А тут я напишу вью для раздачи статистики, которые можно и без РЕСТ фреймворка сделать,
+просто возвращать json_response. А можно и с ним, этого функционала я пока не знаю.
+"""
