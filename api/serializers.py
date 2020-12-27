@@ -4,6 +4,7 @@ from comment.models import Comment
 from likedislike.models import LikeDislike
 from django.contrib.auth import get_user_model
 from generic_relations.relations import GenericRelatedField
+from likedislike import services as likes_dislikes_services
 
 
 User = get_user_model()
@@ -18,10 +19,18 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
+    is_voted = serializers.SerializerMethodField()
 
     class Meta:
         model = Topic
-        fields = ('id', 'author', 'title', 'text', 'created_date', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'sum_rating')
+        fields = ('id', 'author', 'title', 'text', 'created_date', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'sum_rating', 'is_voted')
+    
+    def get_is_voted(self, obj) -> bool:
+        """
+        Проверяет стоит ли лайк или дизлайк от юзера
+        """
+        user = self.context.get('request').user
+        return likes_dislikes_services.is_voted(obj, user)
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):

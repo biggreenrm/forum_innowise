@@ -23,7 +23,7 @@ def remove_like_dislike(obj, user):
         content_type=content_type, object_id=obj.id, user=user
     ).delete()
 
-def is_liked(obj, user) -> bool:
+def is_voted(obj, user) -> bool:
     if not user.is_authenticated:
         return False
     content_type = ContentType.objects.get_for_model(obj)
@@ -34,4 +34,4 @@ def is_liked(obj, user) -> bool:
 # что-то похожее можно использовать, чтобы посчитать все лайки по постам для человека
 def get_liked_persons(obj):
     content_type = ContentType.objects.get_for_model(obj)
-    return User.objects.filter(likes__content_type=content_type, likes__object_id=obj.id)
+    return User.objects.filter(likedislike__content_type=content_type, likedislike__object_id=obj.id)
