@@ -11,11 +11,19 @@ User = get_user_model()
 """
 
 
-def add_like_dislike(obj, user, vote):
+def add_like(obj, user):
+    vote = 1
     content_type = ContentType.objects.get_for_model(obj)
     like, is_created = LikeDislike.objects.get_or_create(
         content_type=content_type, object_id=obj.id, user=user, vote=vote)
     return like
+
+def add_dislike(obj, user):
+    vote = -1
+    content_type = ContentType.objects.get_for_model(obj)
+    dislike, is_created = LikeDislike.objects.get_or_create(
+        content_type=content_type, object_id=obj.id, user=user, vote=vote)
+    return dislike
 
 def remove_like_dislike(obj, user):
     content_type = ContentType.objects.get_for_model(obj)

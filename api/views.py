@@ -3,6 +3,7 @@ from topic.models import Topic
 from comment.models import Comment
 from likedislike.models import LikeDislike
 from .serializers import TopicSerializer, CommentSerializer, LikeDislikeSerializer, UserSerializer
+from .mixins import LikedDislikedMixin
 # Django
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
@@ -25,7 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
 
-class TopicViewSet(viewsets.ModelViewSet):
+class TopicViewSet(viewsets.ModelViewSet, LikedDislikedMixin):
     serializer_class = TopicSerializer
     queryset = Topic.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly, )
