@@ -38,9 +38,3 @@ class CommentViewSet(viewsets.ModelViewSet):
 class LikeDislikeViewSet(viewsets.ModelViewSet):
     serializer_class = LikeDislikeSerializer
     queryset = LikeDislike.objects.all()
-
-
-"""
-А тут я напишу вью для раздачи статистики, которые можно и без РЕСТ фреймворка сделать,
-просто возвращать json_response. А можно и с ним, этого функционала я пока не знаю.
-"""
