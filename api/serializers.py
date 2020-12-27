@@ -14,14 +14,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'is_superuser')
+        fields = ('id', 'url', 'username', 'first_name', 'last_name', 'is_superuser')
 
 
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Topic
-        fields = ('id', 'author', 'text', 'created_date')
+        fields = ('id', 'author', 'title', 'text', 'created_date', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'sum_rating')
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,7 +34,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
     })
     class Meta:
         model = Comment
-        fields = ('user', 'content_object', 'text')
+        fields = ('user', 'content_object', 'text', 'total_likes_dislikes', 'total_likes', 'total_dislikes')
 
 
 class LikeDislikeSerializer(serializers.HyperlinkedModelSerializer):

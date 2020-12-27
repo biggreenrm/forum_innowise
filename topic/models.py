@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from django.utils import timezone
 from django.urls import reverse
 from likedislike.models import LikeDislike
@@ -32,6 +33,18 @@ class Topic(models.Model):
     @property
     def total_likes_dislikes(self):
         return self.likes_dislikes.count()
+
+    @property
+    def total_likes(self):
+        return self.likes_dislikes.filter(vote__gt=0).count()
+
+    @property
+    def total_dislikes(self):
+        return self.likes_dislikes.filter(vote__lt=0).count()
+    
+    @property
+    def sum_rating(self):
+        return self.likes_dislikes.aggregate(Sum('vote')).get('vote__sum') or 0
 
     def get_absolute_url(self):
         return reverse("topic_detail", args=[self.id])
