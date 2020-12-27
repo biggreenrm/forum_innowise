@@ -34,6 +34,7 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
+    is_voted = serializers.SerializerMethodField()
 
     content_object = GenericRelatedField({
         Topic: serializers.HyperlinkedRelatedField(queryset = Topic.objects.all(),
@@ -41,9 +42,17 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
         Comment: serializers.HyperlinkedRelatedField(queryset = Comment.objects.all(),
                                                     view_name='comment-detail',),
     })
+
     class Meta:
         model = Comment
-        fields = ('user', 'content_object', 'text', 'total_likes_dislikes', 'total_likes', 'total_dislikes')
+        fields = ('id', 'user', 'content_object', 'text', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'is_voted')
+    
+    def get_is_voted(self, obj) -> bool:
+        """
+        Проверяет стоит ли лайк или дизлайк от юзера
+        """
+        user = self.context.get('request').user
+        return likes_dislikes_services.is_voted(obj, user)
 
 
 class LikeDislikeSerializer(serializers.HyperlinkedModelSerializer):
