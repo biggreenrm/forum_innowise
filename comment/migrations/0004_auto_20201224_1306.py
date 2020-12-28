@@ -6,14 +6,12 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('comment', '0003_auto_20201224_1149'),
-    ]
+    dependencies = [("comment", "0003_auto_20201224_1149")]
 
     operations = [
         migrations.AlterField(
-            model_name='comment',
-            name='created_date',
+            model_name="comment",
+            name="created_date",
             field=models.DateTimeField(default=django.utils.timezone.now),
-        ),
+        )
     ]
