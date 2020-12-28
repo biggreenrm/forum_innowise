@@ -11,11 +11,19 @@ User = get_user_model()
 """
 
 
-def add_like_dislike(obj, user, vote):
+def add_like(obj, user):
+    vote = 1
     content_type = ContentType.objects.get_for_model(obj)
     like, is_created = LikeDislike.objects.get_or_create(
         content_type=content_type, object_id=obj.id, user=user, vote=vote)
     return like
+
+def add_dislike(obj, user):
+    vote = -1
+    content_type = ContentType.objects.get_for_model(obj)
+    dislike, is_created = LikeDislike.objects.get_or_create(
+        content_type=content_type, object_id=obj.id, user=user, vote=vote)
+    return dislike
 
 def remove_like_dislike(obj, user):
     content_type = ContentType.objects.get_for_model(obj)
@@ -23,7 +31,7 @@ def remove_like_dislike(obj, user):
         content_type=content_type, object_id=obj.id, user=user
     ).delete()
 
-def is_liked(obj, user) -> bool:
+def is_voted(obj, user) -> bool:
     if not user.is_authenticated:
         return False
     content_type = ContentType.objects.get_for_model(obj)
@@ -34,4 +42,4 @@ def is_liked(obj, user) -> bool:
 # что-то похожее можно использовать, чтобы посчитать все лайки по постам для человека
 def get_liked_persons(obj):
     content_type = ContentType.objects.get_for_model(obj)
-    return User.objects.filter(likes__content_type=content_type, likes__object_id=obj.id)
+    return User.objects.filter(likedislike__content_type=content_type, likedislike__object_id=obj.id)

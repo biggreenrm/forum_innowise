@@ -1,7 +1,9 @@
 from django.db import models
+from django.db.models import Sum
 from django.utils import timezone
 from django.urls import reverse
 from likedislike.models import LikeDislike
+from comment.models import Comment
 from django.contrib.contenttypes.fields import GenericRelation
 
 
@@ -17,6 +19,7 @@ class Topic(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_status = models.BooleanField(default=False)
     likes_dislikes = GenericRelation(LikeDislike)
+    comments = GenericRelation(Comment)
 
 
     class Meta:
@@ -33,5 +36,18 @@ class Topic(models.Model):
     def total_likes_dislikes(self):
         return self.likes_dislikes.count()
 
-    def get_absolute_url(self):
-        return reverse("topic_detail", args=[self.id])
+    @property
+    def total_likes(self):
+        return self.likes_dislikes.filter(vote__gt=0).count()
+
+    @property
+    def total_dislikes(self):
+        return self.likes_dislikes.filter(vote__lt=0).count()
+    
+    @property
+    def sum_rating(self):
+        return self.likes_dislikes.aggregate(Sum('vote')).get('vote__sum') or 0
+
+    @property
+    def all_comments(self):
+        return self.comments.all()
