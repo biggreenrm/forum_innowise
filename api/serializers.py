@@ -20,10 +20,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
     is_voted = serializers.SerializerMethodField()
+    all_comments = serializers.HyperlinkedIdentityField(view_name="api:comment-detail", many=True)
 
     class Meta:
         model = Topic
-        fields = ('id', 'author', 'title', 'text', 'created_date', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'sum_rating', 'is_voted')
+        fields = ('id', 'author', 'title', 'text', 'created_date', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'sum_rating', 'is_voted', 'all_comments')
     
     def get_is_voted(self, obj) -> bool:
         """

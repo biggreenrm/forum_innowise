@@ -3,6 +3,7 @@ from django.db.models import Sum
 from django.utils import timezone
 from django.urls import reverse
 from likedislike.models import LikeDislike
+from comment.models import Comment
 from django.contrib.contenttypes.fields import GenericRelation
 
 
@@ -18,6 +19,7 @@ class Topic(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_status = models.BooleanField(default=False)
     likes_dislikes = GenericRelation(LikeDislike)
+    comments = GenericRelation(Comment)
 
 
     class Meta:
@@ -46,5 +48,6 @@ class Topic(models.Model):
     def sum_rating(self):
         return self.likes_dislikes.aggregate(Sum('vote')).get('vote__sum') or 0
 
-    def get_absolute_url(self):
-        return reverse("topic_detail", args=[self.id])
+    # @property
+    # def all_comments(self):
+    #     return self.comments.all()

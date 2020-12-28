@@ -33,11 +33,12 @@ class TopicViewSet(viewsets.ModelViewSet, LikedDislikedMixin):
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ('author', 'title', 'theme', 'created_date')
 
-# добавить фильтры, если получится
 class CommentViewSet(viewsets.ModelViewSet, LikedDislikedMixin):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly, )
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_fields = ('user',)
 
 
 class LikeDislikeViewSet(viewsets.ModelViewSet):
