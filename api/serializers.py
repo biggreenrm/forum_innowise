@@ -46,7 +46,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'user', 'content_object', 'text', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'is_voted')
+        fields = ('id', 'user', 'content_object', 'text', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'is_voted',)
     
     def get_is_voted(self, obj) -> bool:
         """

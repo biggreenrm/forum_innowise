@@ -21,6 +21,7 @@ class Comment(models.Model):
     published_status = models.BooleanField(default=False)
     likes_dislikes = GenericRelation(LikeDislike)
 
+
     class Meta:
         ordering = ("created_date",)
 

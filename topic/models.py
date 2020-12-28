@@ -48,6 +48,6 @@ class Topic(models.Model):
     def sum_rating(self):
         return self.likes_dislikes.aggregate(Sum('vote')).get('vote__sum') or 0
 
-    # @property
-    # def all_comments(self):
-    #     return self.comments.all()
+    @property
+    def all_comments(self):
+        return self.comments.all()
