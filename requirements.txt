@@ -2,9 +2,11 @@ asgiref==3.3.1
 Django==3.1.4
 django-filter==2.4.0
 djangorestframework==3.12.2
-djangorestframework-simplejwt==4.4.0
+djangorestframework-simplejwt==4.6.0
 importlib-metadata==3.3.0
 Markdown==3.3.3
+psycopg2-binary==2.8.6
+PyJWT==2.0.0
 pytz==2020.4
 rest-framework-generic-relations==2.0.0
 sqlparse==0.4.1

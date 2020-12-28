@@ -1,14 +1,11 @@
+# First-party
+from .models import LikeDislike
+# Django
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
-from .models import LikeDislike
+
 
 User = get_user_model()
-
-"""
-Методы для работы с системой лайков/дизлайков.
-Сюда же логично было бы запихнуть возможность посчитать все необходимое.
-А потом просто раздать это через json. Нафига, в принципе, это сериализовать?
-"""
 
 
 def add_like(obj, user):
@@ -39,7 +36,7 @@ def is_voted(obj, user) -> bool:
         content_type=content_type, object_id=obj.id, user=user)
     return likes.exists()
 
-# что-то похожее можно использовать, чтобы посчитать все лайки по постам для человека
+
 def get_liked_persons(obj):
     content_type = ContentType.objects.get_for_model(obj)
     return User.objects.filter(likedislike__content_type=content_type, likedislike__object_id=obj.id)

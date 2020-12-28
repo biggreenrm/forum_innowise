@@ -16,10 +16,6 @@ from django_filters import rest_framework as filters
 User = get_user_model()
 
 
-"""
-Работа с моделями по лайтовому пути - много магии, мало гибкости (она и не нужна).
-"""
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer

@@ -1,10 +1,13 @@
-from rest_framework import serializers
+# First-party
 from topic.models import Topic
 from comment.models import Comment
 from likedislike.models import LikeDislike
-from django.contrib.auth import get_user_model
-from generic_relations.relations import GenericRelatedField
 from likedislike import services as likes_dislikes_services
+# Django
+from django.contrib.auth import get_user_model
+# Third-party
+from rest_framework import serializers
+from generic_relations.relations import GenericRelatedField
 
 
 User = get_user_model()
@@ -27,9 +30,6 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'author', 'title', 'text', 'created_date', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'sum_rating', 'is_voted', 'all_comments')
     
     def get_is_voted(self, obj) -> bool:
-        """
-        Проверяет стоит ли лайк или дизлайк от юзера
-        """
         user = self.context.get('request').user
         return likes_dislikes_services.is_voted(obj, user)
 
@@ -49,9 +49,6 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'user', 'content_object', 'text', 'total_likes_dislikes', 'total_likes', 'total_dislikes', 'is_voted',)
     
     def get_is_voted(self, obj) -> bool:
-        """
-        Проверяет стоит ли лайк или дизлайк от юзера
-        """
         user = self.context.get('request').user
         return likes_dislikes_services.is_voted(obj, user)
 

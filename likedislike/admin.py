@@ -1,6 +1,5 @@
 # First-party
 from .models import LikeDislike
-
 # Django
 from django.contrib import admin
 
