@@ -6,17 +6,16 @@ from .serializers import UserSerializer
 
 
 class LikedDislikedMixin:
-
-    @action(detail=True, methods=['POST'])
+    @action(detail=True, methods=["POST"])
     def like(self, request, pk=None):
         """Like object"""
 
         obj = self.get_object()
         services.add_like(obj, request.user)
-        
+
         return Response()
 
-    @action(detail=True, methods=['POST'])
+    @action(detail=True, methods=["POST"])
     def dislike(self, request, pk=None):
         """Dislike object"""
 
@@ -24,8 +23,8 @@ class LikedDislikedMixin:
         services.add_dislike(obj, request.user)
 
         return Response()
-    
-    @action(detail=True, methods=['POST'])
+
+    @action(detail=True, methods=["POST"])
     def unlike(self, request, pk=None):
         """Remove likedislike object"""
 
@@ -34,15 +33,15 @@ class LikedDislikedMixin:
 
         return Response()
 
-    @action(detail=True, methods=['GET'])
+    @action(detail=True, methods=["GET"])
     def liked_persons(self, request, pk=None):
         """Get person that liked `obj`."""
 
         obj = self.get_object()
         liked_persons = services.get_liked_persons(obj)
-        serializer_context = {
-            'request': request,
-        }
-        serializer = UserSerializer(liked_persons, many=True, context=serializer_context)
+        serializer_context = {"request": request}
+        serializer = UserSerializer(
+            liked_persons, many=True, context=serializer_context
+        )
 
-        return Response(serializer.data)    
+        return Response(serializer.data)

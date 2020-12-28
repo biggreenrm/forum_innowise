@@ -1,6 +1,7 @@
 # First-party
 from likedislike.models import LikeDislike
 from comment.models import Comment
+
 # Django
 from django.db import models
 from django.db.models import Sum
@@ -10,7 +11,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 
 class Topic(models.Model):
-    author = models.ForeignKey('auth.User', db_index=True, on_delete=models.CASCADE)
+    author = models.ForeignKey("auth.User", db_index=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     theme = models.CharField(max_length=200)
     text = models.TextField()
@@ -18,7 +19,6 @@ class Topic(models.Model):
     published_status = models.BooleanField(default=False)
     likes_dislikes = GenericRelation(LikeDislike)
     comments = GenericRelation(Comment)
-
 
     class Meta:
         ordering = ("created_date",)
@@ -29,7 +29,7 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     @property
     def total_likes_dislikes(self):
         return self.likes_dislikes.count()
@@ -41,10 +41,10 @@ class Topic(models.Model):
     @property
     def total_dislikes(self):
         return self.likes_dislikes.filter(vote__lt=0).count()
-    
+
     @property
     def sum_rating(self):
-        return self.likes_dislikes.aggregate(Sum('vote')).get('vote__sum') or 0
+        return self.likes_dislikes.aggregate(Sum("vote")).get("vote__sum") or 0
 
     @property
     def all_comments(self):

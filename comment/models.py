@@ -6,21 +6,19 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from likedislike.models import LikeDislike
 
 
-
 class Comment(models.Model):
     """
     Модель для комментариев к темам на форуме, а также к самим комментариям.
     """
 
-    user = models.ForeignKey('auth.User', db_index=True, on_delete=models.CASCADE)
+    user = models.ForeignKey("auth.User", db_index=True, on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id')
+    content_object = GenericForeignKey("content_type", "object_id")
     text = models.CharField(max_length=1000, default="")
     created_date = models.DateTimeField(default=timezone.now)
     published_status = models.BooleanField(default=False)
     likes_dislikes = GenericRelation(LikeDislike)
-
 
     class Meta:
         ordering = ("created_date",)
@@ -40,7 +38,7 @@ class Comment(models.Model):
     @property
     def total_dislikes(self):
         return self.likes_dislikes.filter(vote__lt=0).count()
-    
+
     @property
     def sum_rating(self):
-        return self.likes_dislikes.aggregate(Sum('vote')).get('vote__sum') or 0
+        return self.likes_dislikes.aggregate(Sum("vote")).get("vote__sum") or 0

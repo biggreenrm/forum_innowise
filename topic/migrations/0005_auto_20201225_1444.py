@@ -5,22 +5,16 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('topic', '0004_auto_20201224_1306'),
-    ]
+    dependencies = [("topic", "0004_auto_20201224_1306")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='topic',
-            options={'ordering': ('created_date',)},
+            name="topic", options={"ordering": ("created_date",)}
         ),
-        migrations.RemoveField(
-            model_name='topic',
-            name='published_date',
-        ),
+        migrations.RemoveField(model_name="topic", name="published_date"),
         migrations.AddField(
-            model_name='topic',
-            name='published_status',
+            model_name="topic",
+            name="published_status",
             field=models.BooleanField(default=False),
         ),
     ]
