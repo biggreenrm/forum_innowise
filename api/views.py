@@ -3,11 +3,13 @@ from topic.models import Topic
 from comment.models import Comment
 from likedislike.models import LikeDislike
 from .serializers import TopicSerializer, CommentSerializer, LikeDislikeSerializer, UserSerializer
+from .mixins import LikedDislikedMixin
 # Django
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 # Third-party
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters import rest_framework as filters
 
 
@@ -21,26 +23,25 @@ User = get_user_model()
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
 
-class TopicViewSet(viewsets.ModelViewSet):
+class TopicViewSet(viewsets.ModelViewSet, LikedDislikedMixin):
     serializer_class = TopicSerializer
     queryset = Topic.objects.all()
+    permission_classes = (IsAuthenticatedOrReadOnly, )
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ('author', 'title', 'theme', 'created_date')
 
-# добавить фильтры, если получится
-class CommentViewSet(viewsets.ModelViewSet):
+class CommentViewSet(viewsets.ModelViewSet, LikedDislikedMixin):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_fields = ('user',)
 
 
 class LikeDislikeViewSet(viewsets.ModelViewSet):
     serializer_class = LikeDislikeSerializer
     queryset = LikeDislike.objects.all()
-
-
-"""
-А тут я напишу вью для раздачи статистики, которые можно и без РЕСТ фреймворка сделать,
-просто возвращать json_response. А можно и с ним, этого функционала я пока не знаю.
-"""
+    permission_classes = (IsAuthenticatedOrReadOnly, )
